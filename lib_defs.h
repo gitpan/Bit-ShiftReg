@@ -62,20 +62,11 @@ typedef  signed     short   *Z_shortptr;
 #undef  TRUE
 #define TRUE        (0==0)
 
-// ###TOM changed
-// MPW already defines the boolean datatype in MacTypes.h, it's spelled 
-// Boolean. Thus here you will get an "Type already defined" error when 
-// compiling ShiftReg.c. I've declared a define switch MPW_HAS_BOOL, 
-// which must be set to 1 while compiling ShiftReg.c.
-
-#ifndef MPW_HAS_BOOL
-typedef enum { false = FALSE , true = TRUE } boolean;
+#ifdef MACOS_TRADITIONAL
+#  define boolean Boolean
 #else
-#define boolean Boolean
-#endif  /* MPW_HAS_BOOL */
-
-//typedef enum { false = FALSE , true = TRUE } boolean;
-// END ###TOM changed
+  typedef enum { false = FALSE , true = TRUE } boolean;
+#endif  /* MACOS_TRADITIONAL */
 
 #define blockdef(name,size)         unsigned char name[size]
 #define blocktypedef(name,size)     typedef unsigned char name[size]

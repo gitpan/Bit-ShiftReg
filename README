@@ -1,19 +1,24 @@
-Sunday, February 11, 2001
+Thuesday, March 12, 2002
 
 Dear MacPerl Users,
 
-this is the Bit-ShiftReg-2.0 module with shared libraries compiled for MacPerl. Shared 
-libraries run only on PPC and CFM68K versions of MacPerl, not non-CFM 68K versions.
+this is the Bit::ShiftReg 2.0 module with a shared library compiled for MacPerl 5.6.1
+(and higher). This was compiled with MPW's MrC (PPC). Passed all tests with the MPW MrC
+build of the MacPerl 5.6.1 application. Let me know of any problems you might 
+encounter.
 
-This was compiled with MPW's MrC (PPC) and SC (68K). Passed all tests on both
-architectures (thanks to my old Mac LC :). However, let me know of any problems you
-might encounter.
 
-You can download the module and the readme from my website via
+*** NOTE:
+This package contains shared libraries, which are loaded dynamically by MacPerl -- 
+well, normally. Currently, dynamic loading of shared libs might NOT work with the MPW 
+MacPerl tool, when build with Apple's MrC compiler. However, dynamic loading always works 
+reliable with the MacPerl application (the official MacPerl release has been built with 
+the Codewarrior compilers, so don't worry too much). Note also that dynamic loading is 
+NOT supported by the 68K versions of the MacPerl application and tool. And finally, note 
+that this distribution will NOT work with good old MacPerl 5.2.0r4.
 
-    http://usemacperl.webjump.com/index.html
 
-or from my CPAN directory
+You can download the Bit-ShiftReg-2.0-bin56Mac.tgz tarball from my CPAN directory
 
     $CPAN/authors/id/T/TW/TWEGNER/
 
@@ -26,55 +31,16 @@ drop the packed archive or the unpacked folder on the droplet. Answer the
 upcoming question "Convert all text and MacBinary files?" with "Yes". This should 
 install the module properly. 
 
-The installer is part of the cpan-mac module, available from CPAN 
-
-    http://www.perl.com/CPAN-local/authors/id/CNANDOR/
-
-or via Chris Nandor's MacPerl page 
-
-    http://pudge.net/macperl/ .
+Since MacPerl 5.6.1 beta 1, the installer is part of the MacPerl disribution.
 	
-
-CHANGES
-=======
-In the 'Mac_changed' folder, you will find a back-up of all the *ORIGINAL* files, 
-that have been changed:
-
-lib_defs.h
-MANIFEST
-README
-
-Actually, the only source (header) file I've changed is 'lib_defs.h'. All the changes  
-I've made can be found by searching for the phrase '###TOM', if you are interested in.
-
-I've added two MPW worksheets (PPC and 68K) to the distribution. This way you can
-build the module yourself, if you like. However, you will need the MacPerl source 
-distribution [1] and the FREE MPW development environment, available from Apple [2]. 
-You may also want to take a look at the Macintosh Perl XS Tutorial [3]. It's best 
-to open the worksheet and execute the commands step by step. Read and follow the 
-instructions I've provided for each step of the build process.
-
-In the build process for CFM68K some extra preparation is required for the source 
-file(s). To help you in this procedure, I've added the file 'ShiftReg_68K.xs'. This 
-should be the input file for the XSUBpp compiler in the CFM68K build process.
-
-In that 68K XS file, the header declarations are bracketed with #import pragmas.
-This special pragma treatment is needed for the SC compiler and the ILink linker  
-(see the Macintosh Perl XS tutorial for details). Follow the steps in the 68K MPW
-worksheet and everything should be fine.
 
 Have fun.
 
 --
 Thomas Wegner
 
-toms_email@gmx.de
+<wegner_thomas@yahoo.com>
 
-References:
-
-[1] MacPerl 5.004 source  <ftp://sunsite.cnlab-switch.ch/software/platform/macos/perl/Mac_Perl_520r4_src.bin>
-[2] Apple's MPW  <http://developer.apple.com/tools/mpw-tools/>
-[3] Macintosh Perl XS Tutorial  <http://macperl.com/depts/Tutorials/XS/Mac_XS.sea.hqx>
 
 
 
