@@ -1,15 +1,9 @@
 MANIFEST
 Makefile.PL
-README.Mac
+README
 ShiftReg.pm
 ShiftReg.xs
-ShiftReg_68K.xs
 lib_defs.h
-Mac_changed/lib_defs.h
-Mac_changed/MANIFEST
-Mac_changed/README
-MPW.WorkSheet(PPC)
-MPW.WorkSheet(68K)
 t/f000.t
 t/f001.t
 t/f002.t

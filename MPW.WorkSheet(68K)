@@ -1,0 +1,116 @@
+# INSTRUCTIONS FOR BUILDING THE Bit::ShiftReg CFM68K SHARED LIBRARY
+	
+
+
+# (1) Copy the Bit-ShiftReg-2.0 folder from the expanded Bit-ShiftReg-2.0.tar.gz archive into the 
+#     :MacPerl_Src:perl:ext folder of the MacPerl source distribution.
+#  
+#     and then
+#
+#     Set the current directory to the Bit-ShiftReg-2.0 folder (via Directory menu).
+
+
+
+
+# (2) Set the MPW variable 'MPSrc' to the path to your MacPerl_Src folder, for example     
+
+Set MPSrc "MacintoshHD:MacPerl_Src"     # (change the path accordingly)
+
+
+
+
+
+# (3) Run the XSUBpp compiler for ShiftReg_68K.xs
+
+perl :::lib:ExtUtils:xsubpp -typemap :::lib:ExtUtils:typemap -typemap :typemap  ShiftReg_68K.xs >ShiftReg.tc && Rename -y ShiftReg.tc ShiftReg.c
+
+
+
+
+
+# (4) If you like, take a look at the resulting C source file ShiftReg.c
+
+open ShiftReg.c
+
+
+
+
+
+# (5) Compile ShiftReg.c (with support for shared library model):
+
+
+SC -w off -d __STD_C -d MULTIPLICITY ¶
+	-d MPW_HAS_BOOL ¶
+	-model cfmflat ¶
+	-i {MPSrc}: ¶
+	-i {MPSrc}:sfio:include: ¶
+	-i {MPSrc}:GUSI:include: ¶
+	-i {MPSrc}:perl: ¶
+	-i : ¶
+    -o ShiftReg.c.o ShiftReg.c
+
+
+
+
+# (6) Link ShiftReg.c.o as shared lib.
+
+
+ILink ¶
+	":ShiftReg.c.o" ¶
+	"{CFM68KLibraries}NuMathLib.o" ¶
+	"{SharedLibraries}StdCLib" ¶
+	"{SharedLibraries}InterfaceLib" ¶
+	"{CFM68KLibraries}NuMacRuntime.o" ¶
+	"{CFM68KLibraries}NuToolLibs.o" ¶
+	{MPSrc}:perl:PerlStub ¶
+	-sym off ¶
+	-mf -d ¶
+	-model cfmflat ¶
+	-xm sharedlibrary ¶
+	-fragname ShiftReg ¶
+	-export boot_Bit__ShiftReg ¶
+	-state rewrite ¶
+	-compact -pad 0 ¶
+	-o ShiftReg.shlb.CFM68K
+
+
+
+
+# (7) Rename shared lib temporary
+
+Rename -y ShiftReg.shlb.CFM68K ShiftReg.shlb.CFM68K.tmp
+
+
+
+
+# (8) Flatten the segmented shared library created by ILink
+
+MakeFlat ShiftReg.shlb.CFM68K.tmp -o ShiftReg.shlb.CFM68K
+ 
+
+
+
+# (9) Set the file type and creator of ShiftReg.shlb.CFM68K 
+
+SetFile -t 'shlb' -c 'cfmg' ShiftReg.shlb.CFM68K
+
+
+
+
+# (10) Delete the temporary file
+
+Delete -y ShiftReg.shlb.CFM68K.tmp
+
+
+
+
+# (11) Rename the shared library 'ShiftReg.shlb.CFM68K' to 'ShiftReg'
+
+Rename -y ShiftReg.shlb.CFM68K ShiftReg
+
+
+
+
+
+#  Done. The shared library 'ShiftReg' must be installed in the ':site_perl:MacCFM68K:auto:Bit:ShiftReg' folder.
+
